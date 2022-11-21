@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package edu.jsu.mcis.project2.dao;
+package edu.jsu.mcis.project2;
 
+import edu.jsu.mcis.project2.dao.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author matthewh
  */
-public class TestServlet extends HttpServlet {
+public class SearchServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,10 +36,10 @@ public class TestServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet TestServlet</title>");            
+            out.println("<title>Servlet SearchServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet TestServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SearchServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,7 +57,30 @@ public class TestServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        DAOFactory daoFactory = null;
+
+        ServletContext context = request.getServletContext();
+        Bean projBean = (Bean)request.getSession().getAttribute("projBean");
+
+        if (context.getAttribute("daoFactory") == null) {
+            System.err.println("*** Creating new DAOFactory ...");
+            daoFactory = new DAOFactory();
+            context.setAttribute("daoFactory", daoFactory);
+        }
+        else {
+            daoFactory = (DAOFactory) context.getAttribute("daoFactory");
+        }
+        
+        try ( PrintWriter out = response.getWriter()) {
+            response.setContentType("application/json; charset=UTF-8");
+        
+            SearchDAO dao = daoFactory.getSearchDAO();  
+            out.println(dao.find(projBean.getParameters()));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }
 
     /**
