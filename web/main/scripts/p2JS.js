@@ -1,22 +1,5 @@
 var Project2 = (function () {
     
-    var test = function(data) {
-        var sections = data.sections;
-        var table = document.createElement("table");
-        var dash = " - ";
-        var section = sections[i];
-        var tr1 = document.createElement("tr");
-        var tr2 = document.createElement("tr");
-        var th = document.createElement("th");
-        var td = document.createElement("td");
-        var br = document.createElement("br");
-        var tbody = document.createElement("tbody");
-        var span = document.createElement("span");
-        
-        span.id = "fieldlabeltext";
-            span.name = "fieldlabeltext";
-    };
-    
     var createSearchResults = function (data) {
         var sections = data.sections;
         var table = document.createElement("table");
@@ -112,7 +95,7 @@ var Project2 = (function () {
             table.append(tbody);
         }
         
-        $("#output").append(table);
+        $("#output").html(table);
     };
 
 
@@ -149,6 +132,9 @@ var Project2 = (function () {
                         createSearchResults(data);
                     }
                     
+                },
+                error: function() {
+                    $("#output").html("No classes were found that meet your search criteria ");
                 }
             });
             
@@ -162,7 +148,6 @@ var Project2 = (function () {
                 dataType: 'json',
                 success: function (data) {
                     if (data.sections.length === 0) {
-                        console.log("y");
                         $("#output").html("No classes have been registered! Register for classes here:"
                                 + "<br><br><a href=\"term_1.jsp\">"
                                 + "Register for Classes</a>");    
@@ -183,13 +168,12 @@ var Project2 = (function () {
         },
         
         delete: function() {
-            console.log($('#delform').serialize());
             $.ajax({
                 url: "http://localhost:8180/Project2/main/register?" + $("#delform").serialize(),
                 method: 'DELETE',
                 dataType: 'json',
                 success: function (data) {
-                    $("#output").html("Course dropped successfully!");
+                    $("#output").prepend("Course dropped successfully!");
                 },
                 error: function() {
                     $("#output").prepend("<p>The CRN is either not valid, or does not belong to a class" +

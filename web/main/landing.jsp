@@ -15,5 +15,8 @@
         <a href="<%= request.getContextPath() %>/main/drop.jsp">Drop a Course</a>
         <br>
         <a href="<%= request.getContextPath() %>/main/report0.jsp">Generate Schedule as PDF</a>
+        <p>
+            <input type="button" value="Logout" onclick="window.open('<%= request.getContextPath() %>/main/logout.jsp', '_self', false);" />
+        </p>
     </body>
 </html>

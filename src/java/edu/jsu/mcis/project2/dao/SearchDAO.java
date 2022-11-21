@@ -1,6 +1,5 @@
 package edu.jsu.mcis.project2.dao;
 
-import edu.jsu.mcis.project2.Bean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -360,11 +359,7 @@ public class SearchDAO {
                 params.get("scheduleType"), params.get("start"), params.get("end"), params.get("days"), 
                 params.get("term")};
             
-            for (String param : paramArr) {
-                System.out.println(param);
-            }
             ps = conn.prepareStatement(QUERY_FIND);
-            System.out.println();
             ps.setString(1, paramArr[0]);
             ps.setString(2, paramArr[0]);
             

@@ -249,18 +249,3 @@ public class Bean {
     }
     
 }
-
-/*
-    string result equal null
-    if hr min or ap are not null
-        dtf hh:mm:ss
-
-        int hor integer pare int
-        int min integer parse min
-        if "1".equals(a0
-            
-        
-
-
-    
-*/

@@ -83,12 +83,7 @@
                 </p>
                 
                 <input type="submit" value="Submit">
-
-                <p>
-                    <input type="button" value="Logout" onclick="window.open('<%= request.getContextPath() %>/main/logout.jsp', '_self', false);" />
-                </p>
                 
-                <%= projBean.getParametersAsHTML() %>
             </fieldset>
         </form>
         <p>
